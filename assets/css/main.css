@@ -9,6 +9,12 @@ html {
     font-family: sans-serif;
 }
 
+input {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 0px 8px #0398fa;
+}
+
 body {
     font-size: 1.5rem;
     text-shadow: 0px 0px 8px #000000;
@@ -26,7 +32,7 @@ p {
 }
 
 #first, #second, #cityDiv {
-    border-bottom: 1px solid white;
+    border-bottom: 2px solid white;
 }
 
 #form div {
