@@ -4,7 +4,7 @@ html {
     padding: 0;
     box-sizing: border-box;
     text-align: center;
-    background-image: url("/assets/img/background.jpg");
+    background-image: url("assets/img/clouds.jpg");
     color: white;
     font-family: sans-serif;
 }
