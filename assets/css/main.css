@@ -21,7 +21,7 @@ body {
 }
 
 #result {
-    display: inline-block;
+    display: none;
     margin: auto;
     padding: 20px;
     border: 2px solid white;

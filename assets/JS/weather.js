@@ -89,6 +89,7 @@ function draw(targetDiv, weatherObject) {
     const firstInfo = document.createElement("div");
     firstInfo.id = "first";
     firstInfo.style.display = "flex";
+    firstInfo.style.justifyContent = "space-around";
     firstInfo.style.margin = "auto";
     firstInfo.appendChild(skyP);
     firstInfo.appendChild(tempP);
@@ -98,6 +99,7 @@ function draw(targetDiv, weatherObject) {
     secondInfo.id = "second";
     secondInfo.style.margin = "auto";
     secondInfo.style.display = "flex";
+    secondInfo.style.justifyContent = "space-around";
     secondInfo.appendChild(windP);
     secondInfo.appendChild(sunHourP);
     targetDiv.appendChild(secondInfo);
@@ -106,9 +108,12 @@ function draw(targetDiv, weatherObject) {
     thirdInfo.style.margin = "auto";
     thirdInfo.id = "third";
     thirdInfo.style.display = "flex";
+    thirdInfo.style.justifyContent = "space-around";
     thirdInfo.appendChild(humidityP);
     thirdInfo.appendChild(pressureP);
     targetDiv.appendChild(thirdInfo);
+
+    targetDiv.style.display = "inline-block";
 }
 
 const getWeatherByPosition = function (coordinates) {
@@ -125,7 +130,10 @@ function getWeather(requestURL) {
             draw(resultDiv, response)
             console.log(response)
         })
-        .catch(() => resultDiv.innerHTML = "Veuillez rentrer une ville valide")
+        .catch(() => {
+            resultDiv.style.display = "inline-block";
+            resultDiv.innerHTML = "Veuillez rentrer une ville valide"
+        })
 }
 
 document.querySelector("#byPosition").addEventListener("click", () => {
