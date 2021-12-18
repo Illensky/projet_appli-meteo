@@ -58,11 +58,15 @@ function draw(targetDiv, weatherObject) {
     const windP = document.createElement("p");
     windP.id = "wind";
     const arrowP = document.createElement("p");
+    let gust = Math.trunc(weatherObject.wind.gust * 3.6)
+    if (isNaN(gust)) {
+        gust = 0
+    }
     arrowP.innerHTML = "&uarr;";
     arrowP.style.fontSize = "2rem";
     arrowP.style.transform = "rotate(" + Math.trunc(weatherObject.wind.deg).toString() + "deg)";
     windP.innerHTML = "Vitesse : " + "<br>" + Math.trunc(weatherObject.wind.speed * 3.6).toString() + " Km/h" + "<br>" +
-        "<br> Rafalles : " + "<br>" + Math.trunc(weatherObject.wind.gust * 3.6).toString() + " Km/h" + "<br>" +
+        "<br> Rafalles : " + "<br>" + gust.toString() + " Km/h" + "<br>" +
         "<br> Direction : " + "<br>" + Math.trunc(weatherObject.wind.deg).toString() + " deg";
     windP.appendChild(arrowP);
 
