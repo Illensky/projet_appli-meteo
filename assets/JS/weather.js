@@ -82,6 +82,7 @@ function draw(targetDiv, weatherObject) {
     cityDiv.appendChild(cityP);
     cityDiv.id = "cityDiv";
     cityDiv.style.display = "flex";
+    cityDiv.style.justifyContent = "center"
     cityDiv.style.margin = "auto";
     targetDiv.appendChild(cityDiv);
 

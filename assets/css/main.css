@@ -21,9 +21,12 @@ body {
 }
 
 #result {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: inline-block;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.38);
     font-weight: bolder;
 }
 
