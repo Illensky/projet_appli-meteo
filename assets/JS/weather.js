@@ -1,10 +1,10 @@
 let longitude;
 let latitude;
 
-resultDiv = document.querySelector("#result");
+resultDiv = $("#result");
 
 function draw(targetDiv, weatherObject) {
-    targetDiv.innerHTML = "";
+    targetDiv.html("");
 
     const cityP = document.createElement("p");
     cityP.id = "city";
@@ -58,10 +58,10 @@ function draw(targetDiv, weatherObject) {
     const windP = document.createElement("p");
     windP.id = "wind";
     const arrowP = document.createElement("p");
-    let gust = Math.trunc(weatherObject.wind.gust * 3.6)
+    let gust = Math.trunc(weatherObject.wind.gust * 3.6);
     if (isNaN(gust)) {
         gust = 0
-    }
+    };
     arrowP.innerHTML = "&uarr;";
     arrowP.style.fontSize = "2rem";
     arrowP.style.transform = "rotate(" + Math.trunc(weatherObject.wind.deg).toString() + "deg)";
@@ -88,7 +88,7 @@ function draw(targetDiv, weatherObject) {
     cityDiv.style.display = "flex";
     cityDiv.style.justifyContent = "center"
     cityDiv.style.margin = "auto";
-    targetDiv.appendChild(cityDiv);
+    targetDiv.append(cityDiv);
 
     const firstInfo = document.createElement("div");
     firstInfo.id = "first";
@@ -97,7 +97,7 @@ function draw(targetDiv, weatherObject) {
     firstInfo.style.margin = "auto";
     firstInfo.appendChild(skyP);
     firstInfo.appendChild(tempP);
-    targetDiv.appendChild(firstInfo);
+    targetDiv.append(firstInfo);
 
     const secondInfo = document.createElement("div");
     secondInfo.id = "second";
@@ -106,7 +106,7 @@ function draw(targetDiv, weatherObject) {
     secondInfo.style.justifyContent = "space-around";
     secondInfo.appendChild(windP);
     secondInfo.appendChild(sunHourP);
-    targetDiv.appendChild(secondInfo);
+    targetDiv.append(secondInfo);
 
     const thirdInfo = document.createElement("div");
     thirdInfo.style.margin = "auto";
@@ -115,43 +115,45 @@ function draw(targetDiv, weatherObject) {
     thirdInfo.style.justifyContent = "space-around";
     thirdInfo.appendChild(humidityP);
     thirdInfo.appendChild(pressureP);
-    targetDiv.appendChild(thirdInfo);
+    targetDiv.append(thirdInfo);
 
-    targetDiv.style.display = "inline-block";
+    targetDiv.css("display","inline-block");
 }
 
-const getWeatherByPosition = function (coordinates) {
-    longitude = coordinates.coords.longitude.toFixed(1);
-    latitude = coordinates.coords.latitude.toFixed(1);
-    const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=473181a46534fcfe5e29dd70c34d4f8b&lang=fr&units=metric";
-    getWeather(url);
-}
-
-function getWeather(requestURL) {
-    fetch(requestURL)
-        .then(response => response.json())
-        .then(response => {
-            draw(resultDiv, response)
-            console.log(response)
-        })
-        .catch(() => {
-            resultDiv.style.display = "inline-block";
-            resultDiv.innerHTML = "Veuillez rentrer une ville valide"
-        })
-}
 
 document.querySelector("#byPosition").addEventListener("click", () => {
     navigator.geolocation.getCurrentPosition(getWeatherByPosition);
 })
 
 document.querySelector("#byInput").addEventListener("click", () => {
-    const url = "https://api.openweathermap.org/data/2.5/weather?q=" + document.querySelector("#userCity").value + "&appid=473181a46534fcfe5e29dd70c34d4f8b&lang=fr&units=metric";
-    getWeather(url);
+    getWeatherByInput();
 })
 
 document.querySelector("body").addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        const url = "https://api.openweathermap.org/data/2.5/weather?q=" + document.querySelector("#userCity").value + "&appid=473181a46534fcfe5e29dd70c34d4f8b&lang=fr&units=metric";
-        getWeather(url);
+        getWeatherByInput();
     }
 })
+
+const getWeatherByPosition = function (coordinates) {
+    longitude = coordinates.coords.longitude.toFixed(1);
+    latitude = coordinates.coords.latitude.toFixed(1);
+    const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=473181a46534fcfe5e29dd70c34d4f8b&lang=fr&units=metric";
+    request(url);
+}
+
+function getWeatherByInput () {
+    const url = "https://api.openweathermap.org/data/2.5/weather?q=" + document.querySelector("#userCity").value + "&appid=473181a46534fcfe5e29dd70c34d4f8b&lang=fr&units=metric";
+    request(url)
+}
+
+function request(requestUrl) {
+    $.ajax({
+        url : requestUrl,
+        method : "GET",
+        dataType : "json"
+    })
+        .done(function (response) {
+            draw(resultDiv, response)
+        })
+}
